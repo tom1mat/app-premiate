@@ -5,6 +5,7 @@ import { InputItem, Button } from '@ant-design/react-native';
 
 import { topLevelNavigator } from '../navigation/NavigationService';
 import { isSignedIn, signIn, signOut } from '../services/oauth';
+import { getUserData } from '../services/api';
 
 const mapStateToProps = state => ({
   initialData: state.initialData
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const LoginScreen = ({ initialData }) => {
+const LoginScreen = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errorEmail, setErrorEmail] = useState();
@@ -31,9 +32,18 @@ const LoginScreen = ({ initialData }) => {
   const [isLoading, setisLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
-    const googleData = await signIn();
-    console.log('google data: ', googleData)
-    topLevelNavigator.navigate('MainTab');
+    try {
+      const googleData = await signIn();
+      const userData = await getUserData(googleData.email);
+      props.dispatch({
+        type: 'SET_INITAL_STATE',
+        payload: userData,
+      });
+      topLevelNavigator.navigate('MainTab'); 
+    } catch (error) {
+      console.error('Error en handleGoogleSignIn');
+      console.error(error);
+    }
   }
 
   const handleLogIn = async () => {

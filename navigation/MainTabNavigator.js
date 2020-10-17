@@ -5,21 +5,22 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SubastasScreen from '../screens/SubastasScreen';
+import SorteosScreen from '../screens/SorteosScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
 
+// Home screen
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
   },
   config
 );
-
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
@@ -33,45 +34,58 @@ HomeStack.navigationOptions = {
     />
   ),
 };
-
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+// Subastas screen
+const SubastasStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Subastas: SubastasScreen,
   },
   config
 );
-
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+SubastasStack.navigationOptions = {
+  tabBarLabel: 'Subastas',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
 };
+SubastasStack.path = '';
 
-LinksStack.path = '';
-
-const SettingsStack = createStackNavigator(
+// Sorteos screen
+const SorteosStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Sorteos: SorteosScreen,
   },
   config
 );
+SorteosStack.navigationOptions = {
+  tabBarLabel: 'Sorteos',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+  ),
+};
+SubastasStack.path = '';
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+// Profile screen
+const ProfileStack = createStackNavigator(
+  {
+    Profile: ProfileScreen,
+  },
+  config
+);
+ProfileStack.navigationOptions = {
+  tabBarLabel: 'Profile',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
   ),
 };
-
-SettingsStack.path = '';
+ProfileStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  SorteosScreen,
+  SubastasStack,
+  ProfileStack,
 });
 
 tabNavigator.path = '';

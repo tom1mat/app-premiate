@@ -1,8 +1,9 @@
 const reducer = (state = {}, action) => {
-  console.log('INITIAL STATE: ', state);
   switch (action.type) {
     case "START_SESSION":
       return true;
+    case "SET_INITAL_STATE":
+      return action.payload;
     default:
       return state;
   }

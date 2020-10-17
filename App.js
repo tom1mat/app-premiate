@@ -6,6 +6,9 @@ import { AsyncStorage, Platform, StatusBar, StyleSheet, View, Text } from 'react
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from "react-redux";
 import { createStore } from "redux";
+import { Provider as AntDesignProvider } from "@ant-design/react-native"
+
+import esES from '@ant-design/react-native/es/locale-provider/es_ES';
 
 import reducers from "./reducers";
 import AppNavigator from './navigation/AppNavigator';
@@ -27,12 +30,14 @@ export default function App(props) {
     );
   } else {
     return (
-      <Provider store={createStore(reducers, initialData)}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator initialRouteName={initialRouteName}/>
-        </View>
-      </Provider>
+      <AntDesignProvider locale={ {value: 'Español', label: 'Español', language: esES}}>
+        <Provider store={createStore(reducers, initialData)}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator initialRouteName={initialRouteName}/>
+          </View>
+        </Provider>
+      </AntDesignProvider>
     );
   }
 }
